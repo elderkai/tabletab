@@ -1,0 +1,173 @@
+@media screen and (orientation:landscape){
+    .boxBanner{
+        display: flex;
+        justify-content: space-between;
+ }
+ .head_data {
+     font-size: .4rem;
+     text-align: right;
+ }
+ .times{
+     margin-right: 3rem;
+ }
+.head_title{
+    white-space: normal;
+    width:40%;
+}
+}
+.num1{
+    color: #FC8F64;
+    font-weight: bolder;
+}
+.num2{
+    font-weight: bolder;
+    color: #F36969;
+}
+.num3{
+    font-weight: bolder;
+    color: #A67676;
+}
+.num4{
+    font-weight: bolder;
+    color: #1FC49A;
+}
+.num5{
+    color:#F36969;
+}
+.num6{
+    color: #6BA1E4;
+}
+.bold{
+    font-weight: bold;
+}
+.customerTitle{
+    width: 8rem;
+    height: 1.4rem;
+    font-size:.42rem;
+    line-height: .72rem;
+    font-family: "MicrosoftYaHei";
+    color:#333;
+    margin-top:.5rem;
+}
+@media all and (orientation : portrait){ 
+    #tbodyBox2{
+        width: 6.7rem;
+    }
+    .boxBanner{
+        display: flex;
+        justify-content: space-between;
+ }
+ .head_data {
+     font-size: .4rem;
+     text-align: right;
+     position: relative;
+ }
+ .times{
+     margin-right: 0;
+ }
+.head_title{
+    white-space: normal;
+    width:40%;
+}
+.ANP{
+   position: absolute;
+   float: right;
+   right: 0;
+   top: .8rem;;
+}
+.fixTableHead table {
+    /* width: 2.45rem !important; */
+}
+.container .fixTableHead{
+    top:0;
+} 
+.checkedTableBox{
+    color:#999999;
+    font-size: .38rem;
+    font-weight: 400;
+    font-family: MicrosoftYaHei;
+    margin-bottom: .6rem;
+}
+.checkedItem{
+    display: inline-block;
+    margin:0 .8rem;
+    cursor: pointer;
+    padding-bottom: .2rem;
+}}
+.hrPage{
+    width: 100vw;
+    height: 10px;
+    border: none;
+    background: #f4f4f4;
+    box-shadow: 3px 3px 3px   #f4f4f4;
+    transform: translate(-0.8rem,0);
+    margin:.7rem 0;
+}
+.checked1{
+    color:#FC8F64;
+    font-weight: bold;
+    border-bottom: 1px solid #FC8F64;
+}
+.checked2{
+    color:#A67676;
+    font-weight: bold;
+    border-bottom: 1px solid #A67676;
+}
+.checked3{
+    color:#15C295;
+    font-weight: bold;
+    border-bottom: 1px solid #15C295;
+}
+.checked4{
+    color:#9481F4;
+    font-weight: bold;
+    border-bottom: 1px solid #9481F4;
+}
+.checked5{
+    color:#5294F2;
+    font-weight: bold;
+    border-bottom: 1px solid #5294F2;
+}
+@media screen and (orientation:landscape){
+.customerTitle .customerNum,.browseNum{
+    display: inline-block;
+}
+.customerTitle{
+    display: flex;
+    justify-content: space-between;
+    height: .8rem;
+}
+.customerTitle{
+width: 13rem;
+margin-right: 1rem;
+}
+table{
+    /* margin-top:.2rem; */
+    opacity:value;
+}
+.checkedTableBox{
+    color:#999999;
+    font-size: .38rem;
+    font-weight: 400;
+    font-family: MicrosoftYaHei;
+    margin-bottom: .6rem;
+}
+.checkedItem{
+    display: inline-block;
+    margin:0 .8rem;
+    cursor: pointer;
+    padding-bottom: .2rem;
+}
+}
+.checkedStyle th{
+    background: #E9F8FF;
+    /* color:#fff;
+    background: #FC6464; */
+    opacity:value;
+}
+.layui-field-title{
+    border:none;
+}
+.phoneWidth{
+    width: 3.4rem;
+}

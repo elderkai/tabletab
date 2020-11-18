@@ -1,0 +1,380 @@
+html,body{
+	-webkit-text-size-adjust:none;
+}
+body {
+	width: auto;
+	height: auto;
+	font-family: "Microsoft Yahei";
+	background: #fff;
+	opacity: 1;
+}
+
+html,
+body,
+div,
+p,
+span,
+ul,
+ol,
+li,
+button,
+input,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 0;
+	padding: 0;
+	outline: none;
+	border: 0;
+}
+
+body {
+	-webkit-overflow-scrolling: touch;
+	overflow: scroll;
+}
+th{
+	background: #fff;
+}
+.container {
+	/* padding: .43rem; */
+	padding:0 .8rem;
+	box-sizing: border-box;
+	background: rgba(255, 255, 255, 1);
+	position: relative;
+	overflow: hidden;
+	max-width: 100vw;
+	min-height: 100vh;
+}
+
+/*banner*/
+.banner {
+	padding-top: .2rem;
+}
+
+.head_title {
+	font-size: .52rem;
+	font-family: Microsoft YaHei;
+	font-weight: bold;
+	color: rgba(68, 68, 68, 1);
+}
+
+.head_data {
+	font-size: .52rem;
+	font-family: Microsoft YaHei;
+	font-weight: 400;
+	color: #999;
+	width:16.7rem;
+}
+
+/*表格*/
+table {
+	width: 17.1rem;
+	height: auto;
+	border-radius: 0rem;
+	/* margin-top: 0.38rem; */
+	margin-right: 0.34rem;
+	table-layout: fixed;
+	border-top-left-radius: 0.1rem;
+	border-top-right-radius: 0.1rem;
+}
+
+table th,
+table td {
+	font-weight: 400;
+	font-size: 0.2rem;
+	text-align: center;
+	color: rgba(68, 68, 68, 1);
+	font-family: Microsoft YaHei;
+	border: 1px solid#E5E5E5;
+	
+font-weight: bold;
+}
+
+table thead th {
+	color: #fff;
+	font-weight: bold;
+	padding: 0.1rem 0;
+	height: 0.6rem;
+}
+
+table thead tr.row_total {
+	background: #EAF8FE;
+}
+
+table thead tr.row_total th {
+	color: #444;
+}
+
+table tbody tr.row_total {
+	font-weight: bold;
+	background: #EAF8FE
+}
+
+table tbody th,
+table tbody td {
+	padding-top: 0.15rem;
+	padding-bottom: 0.15rem;
+	white-space: nowrap;
+	overflow: auto;
+}
+
+table tbody tr.row_jg td:nth-child(1),
+table tbody tr.row_jg td:nth-child(2),
+table tbody tr.row_jg td:nth-child(3),
+table tbody tr.row_xj td:nth-child(1),
+table tbody tr.row_xj td:nth-child(2) {
+	font-weight: bold;
+}
+
+table tbody tr.row_xj td:nth-child(n+1),
+table tbody tr.row_jg td:nth-child(n+2) {
+	background: rgba(229, 229, 229, .61);
+}
+
+
+/* 颜色 */
+.blue {
+	background: rgba(82, 145, 224, 1);
+}
+
+.orange {
+	background: rgba(234, 93, 58, 1);
+}
+
+.cyan {
+	background: rgba(25, 184, 144, 1);
+}
+
+.firebrick {
+	background: rgba(183, 73, 95, 1);
+}
+
+.yellow {
+	background: #FCB364;
+}
+
+.pink {
+	background: rgba(230, 77, 110, 1);
+}
+.color1{
+	background: #9B8BF1;
+}
+.color2{
+	background: #FC6464
+}
+.color3{
+	background: #FC64A4;
+}
+.color4{
+	background: #BD5CE5;
+}
+.color5{
+	background: #F34BB6;
+}
+.color6{
+	background: #F34B6F
+}
+.color7{
+	background: #64A8FC;
+}
+.color8{
+	background: #736DE9;
+}
+.color9{
+background: #FC8F64;
+}
+.color10{
+	background: #A67676;
+}
+.color11{
+	background: #1FC49A;
+}
+.color12{
+	background:#5294F2;
+}
+/* 特殊 */
+.important {
+	font-size: 0.2rem;
+	font-family: Arial;
+	color: rgba(233, 0, 0, 1) !important;
+}
+.bluelp{
+	color: rgba(82, 145, 224, 1) !important;
+}
+.tbodyBox{
+	scrollbar-width: none;
+	max-height: 7rem;
+	min-height: 5rem;
+	overflow: hidden;
+	overflow-y: scroll;
+}
+.theadBox::-webkit-scrollbar {
+	display: none; /* Chrome Safari */
+  }
+.tbodyBox::-webkit-scrollbar {
+	display: none; /* Chrome Safari */
+  }
+.theadBox{
+	scrollbar-width: none;
+	max-width: 17.1rem;
+	overflow: hidden;
+	overflow: scroll;
+	position: relative;
+}
+.hr{
+	border: 1px solid #F9F9F9;
+	border-top: 0 ;
+	position: absolute;
+	bottom: -.3rem;
+	transform: translate(-0.8rem,0);
+	margin: .7rem 0;
+	margin-top:1rem;
+	width: 100vw;
+}
+.icon{
+	cursor: pointer;
+}
+th,td{
+	/* overflow:hidden; /* 内容超出宽度时隐藏超出部分的内容 */
+	/* text-overflow:ellipsis; */ 
+	cursor: pointer;
+}
+th .treatIcon{
+	width: 0.3rem;
+    height: 0.4rem;
+}
+th .wrongIcon{
+	width: 0.3rem;
+    height: 0.4rem;
+}
+.morWidth{
+width: 2.8rem;
+}
+.litWidth{
+	/* width:.7rem; */
+}
+/* .overStyle{
+	display:-webkit-box;
+	-webkit-line-clamp:1;
+	-webkit-box-orient:vertical
+} */
+.tableBold{
+font-weight: bold;
+color: #444444;
+}
+.thColor1{
+	color:#E90000;
+}
+.thColor2{
+	color:#5291E0;
+}
+.warnTitle{
+    font-size: .24rem;
+    font-family: Microsoft YaHei;
+    font-weight: 400;
+    background: #f9f9f9;
+    padding: .2rem;
+    color: #999;
+    border-radius: 5px;
+    margin-top: .2rem;
+}
+
+/*手机竖屏时执行*/
+@media all and (orientation : portrait){ 
+
+	.warnTitle {
+		font-size: .42rem;
+		position: absolute;
+		bottom: 0;
+	
+	}
+    .theadBox table {
+
+		width:30.4rem;
+	}
+	.tbodyBox{
+		width:30.4rem;
+		min-height:22rem ;
+		max-height:27rem ;
+	}
+	#tbodyBox2{
+		width: 4.1rem;
+	}
+	.fixTableHead #tbodyBox2{
+		width: 6.1rem;
+	}
+	.container .fixTableHead{
+		position: absolute;
+		width: 5.64rem !important;
+		height: 4rem;
+		left: 0;
+		z-index: 999;
+		top: 0;
+	}
+	.fixTableHead table 	{
+		width:6.1rem !important;
+	}
+	.getBusinessElt table{
+		width:4.1rem !important;	
+	}
+	.CustomerDetail table{
+		width:6.7rem !important;	
+	}
+	.noOrder table{
+		width:6.3rem !important;	
+	}
+	/* .tbodyBox{
+		overflow: scroll !important;
+	} */
+} 
+@media screen and (orientation:landscape){
+	.theadBox table {
+		width:17.1rem;
+	}	
+	.fixTableHead{
+		display: none
+	}
+}
+.fixTableHead{
+	position: absolute;
+    width: 5.64rem !important;
+    height: 4rem;
+    left: .7rem;
+    z-index: 999;
+    top: .74rem;
+}
+		.fixTableHead table 	{
+			width:3.56rem;
+		}
+		
+	
+		.fixTableHead .specialTr 	{
+	height: 1.64rem;
+}
+.fixTrBox{
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.boxFix{
+	position: relative;
+}
+.trStyle1{
+	height: 1.68rem;
+}
+/*ipaid*/
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px){
+	.tbodyBox{
+		max-height: 20rem;
+		min-height: 20rem;
+	}
+}
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px)and (orientation: landscape){
+.tbodyBox{
+	min-height: 10.5rem;
+	max-height: 10.5rem;
+}
+}

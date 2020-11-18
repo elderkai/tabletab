@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta content="telephone=no" name="format-detection" />
+  <title>全国预投业务快报</title>
+
+  <!-- <script src="../assets/js/axios.js"></script> -->
+  <!-- <script src="../assets/js/request.js"></script> -->
+  <!-- <script src="../assets/js/tool.js"></script> -->
+  <script src="../assets/js/jquery-2.1.0.js"></script>
+  <link rel="stylesheet" href="../lib/layui/css/layui.css">
+
+  <link rel="stylesheet" href="../assets/css/page.css">
+  <link rel="stylesheet" href="../assets/css/1.css">
+</head>
+
+<body>
+  <div class="container" id="app">
+    <!-- <header class="header">
+      <i class="layui-icon layui-icon-left icon" style="font-size: 1rem; color: #000;"></i>
+      <div class="title">全国预投业务快报</div>
+    </header> -->
+    <div class="boxBanner">
+      <div class="head_title">全国预投业务快报</div>
+      <div class="head_data banner">数据刷新时间：<span class="times"> {{tableTotal.statDateStr}}</span>
+        <span class="ANP">ANP单位：万</span>
+      </div>
+    </div>
+    <div class="boxFix">
+      <div class="fixTableHead">
+        <table>
+          <thead>
+            <tr class="specialTr">
+              <th rowspan="2" class="blue">机构类别</th>
+              <th rowspan="2" class="blue">机构</th>
+              <th rowspan="2" class="blue">分行</th>
+              </tr>
+          </thead>
+        </table>
+        <div class="tbodyBox" id="tbodyBox2">
+          <table border="0" cellpadding="0" cellspacing="0"
+            style="border-collapse:collapse;table-layout:fixed">
+            <tbody id="fixTableBox">
+            </tbody>   
+          </table>
+        </div>
+      </div>
+      <div id="theadBox" ref="theadBoxs" class="theadBox">
+        <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;table-layout:fixed">
+          <thead>
+            <tr>
+              <th rowspan="2" class="blue moveFixed moveFixed1">机构类别</th>
+              <th rowspan="2" class="blue moveFixed moveFixed1">机构</th>
+              <th rowspan="2" class="blue moveFixed moveFixed1">分行</th>
+              <th colspan="4" class="color2 ">合计业绩</th>
+              <th colspan="2" class="color1">小程序用户</th>
+              <th colspan="2" class="color2 ">当日新增订单</th>
+              <th colspan="2" class="color3 ">累计订单</th>
+              <th colspan="2" class="yellow ">累计自费保险业绩</th>
+            
+            </tr>
+            <tr>
+              <th class="color2">ANP</th>
+              <th class="color2">件数</th>
+              <th class="color2">ANP目标</th>
+              <th class="color2">ANP达成率</th>
+              <th class="color1">当日新增</th>
+              <th class="color1">累计</th>
+              <th class="color2">ANP</th>
+              <th class="color2">件数</th>
+              <th class="color3">ANP</th>
+              <th class="color3">件数</th>
+              <th class="yellow">ANP</th>
+              <th class="yellow">件数</th>
+           
+            </tr>
+          </thead>
+        </table>
+        <div class="tbodyBox" id="tbodyBox">
+          <table border="0" cellpadding="0" cellspacing="0"
+            style="border-collapse:collapse;table-layout:fixed">
+            <tbody id="tableBox">
+            </tbody>   
+          </table>
+        </div>
+  
+      </div>
+
+    </div>
+    <div class="warnTitle"><span>说明：</span>本报表中凡涉及保险ANP统计结果为招行员工“招福通”下单的数据，由于部分员工在系统关闭前可能存在撤单，所以与最终交易结果可能存在差异。</div>
+  </div>
+  <script src="../assets/js/vue.js"></script>
+  <script src="../assets/js/jquery-2.1.0.js"></script>
+  <script src="../assets/js/setRem.js"></script>  
+  <script src="../assets/js/axios.js"></script>
+  <script src="../assets/js/request.js"></script>
+  <script src="../assets/json/1.js"></script>
+  <script>
+
+
+
+
+    window.onload = function () {
+      new Vue({
+        el: '#app',
+        data() {
+          return {
+            tableTotal:{},
+            list:[],
+            code:"12",
+           
+          }
+        },
+        methods: {
+          getHnum(value){
+          if(value.length>0){
+            let num=value.length;
+            value.forEach((item,index)=>{
+              if(item.childList){
+                    num=num+item.childList.length;
+              }
+            })
+             return num;
+          }
+          },
+          makeTable(list) {
+            let arr = [];
+            let obj={};
+            for(let i in list){
+              obj[i]=list[i];
+            }
+            this.tableTotal=JSON.parse(JSON.stringify(obj));
+            list.childList.forEach((item,index)=>{
+              for(let i in item){
+              obj[i]=item[i];
+            }
+            obj["hNum"]=this.getHnum(item.childList)+1;
+              arr.push(JSON.parse(JSON.stringify(obj)))
+   
+            })
+            this.list=arr;
+
+            let str=``;
+            let fixTable=``;
+            this.list.forEach((item,index)=>{
+           str=str+`
+              <tr class="">
+              <th class="tableBold moveFixed moveFixed2" rowspan="${item.hNum}">${item.agentOrgType}</th>  
+            </tr>
+            `
+            fixTable=fixTable+`
+            <tr class="">
+              <th class="tableBold" rowspan="${item.hNum}">${item.agentOrgType}</th></tr>
+            `;
+            if(item.childList.length>0){
+              item.childList.forEach((ite,inde)=>{
+                fixTable=fixTable+`
+                <tr class="row_total">
+                  <th class="tableBold " colspan="2">${ite.agentOrgName}小计</th>
+            </tr>
+            <tr class="">
+                    <th class="tableBold  " rowspan="${ite.childList.length}">${ite.agentOrgName}</th>`
+                str=str+
+                `<tr class="row_total">
+                  <th class="tableBold moveFixed" colspan="2">${ite.agentOrgName}小计</th>
+                  <th class="thColor1">${ite.sumAnp}</th>
+            <th class="thColor2">${ite.sumCase}</th>
+            <th class="thColor1">${ite.sumAnpTarget}</th>
+            <th class="thColor2">${ite.sumAnpRateStr}</th>
+            <th class="thColor1">${ite.appletsDayNum}</th>
+            <th class="thColor2">${ite.appletsTotalNum}</th>
+            <th class="thColor1">${ite.dayAnp}</th>
+            <th class="thColor2">${ite.dayCase}</th>
+            <th class="thColor1">${ite.totalAnp}</th>
+            <th class="thColor2">${ite.totalCase}</th>
+            <th class="thColor1">${ite.totalOwnAnp}</th>
+            <th class="thColor2">${ite.totalOwnCase}</th>
+                  </tr>
+                  <tr class="">
+                    <th class="tableBold moveFixed moveFixed2" rowspan="${ite.childList.length}">${ite.agentOrgName}</th>`
+                    ite.childList.forEach((element,eleIndex)=>{
+                      if(eleIndex==0){
+                        fixTable=fixTable+`
+                  <th class=" ">${element.agentOrgName}</th>
+                </tr> `
+                        str=str+`
+                  <th class="moveFixed moveFixed2">${element.agentOrgName}</th>
+                  <th class="thColor1">${element.sumAnp}</th>
+            <th class="thColor2">${element.sumCase}</th>
+            <th class="thColor1">${element.sumAnpTarget}</th>
+            <th class="thColor2">${element.sumAnpRateStr}</th>
+            <th class="thColor1">${element.appletsDayNum}</th>
+            <th class="thColor2">${element.appletsTotalNum}</th>
+            <th class="thColor1">${element.dayAnp}</th>
+            <th class="thColor2">${element.dayCase}</th>
+            <th class="thColor1">${element.totalAnp}</th>
+            <th class="thColor2">${element.totalCase}</th>
+            <th class="thColor1">${element.totalOwnAnp}</th>
+            <th class="thColor2">${element.totalOwnCase}</th>
+                     </tr> `
+                      }else{
+                        fixTable=fixTable+`
+                        <tr>
+                  <th class=" ">${element.agentOrgName}</th>     
+                  </tr>`
+                        str=str+`
+                        <tr>
+                  <th class="moveFixed moveFixed2">${element.agentOrgName}</th>
+                  <th class="thColor1">${element.sumAnp}</th>
+            <th class="thColor2">${element.sumCase}</th>
+            <th class="thColor1">${element.sumAnpTarget}</th>
+            <th class="thColor2">${element.sumAnpRateStr}</th>
+            <th class="thColor1">${element.appletsDayNum}</th>
+            <th class="thColor2">${element.appletsTotalNum}</th>
+            <th class="thColor1">${element.dayAnp}</th>
+            <th class="thColor2">${element.dayCase}</th>
+            <th class="thColor1">${element.totalAnp}</th>
+            <th class="thColor2">${element.totalCase}</th>
+            <th class="thColor1">${element.totalOwnAnp}</th>
+            <th class="thColor2">${element.totalOwnCase}</th>
+                      </tr>`
+                      }                  
+                    })                
+              })
+            }
+
+          })
+          $("#fixTableBox")[0].innerHTML=`
+            <tr class="row_total">
+            <th class="tableBold " colspan="3">总计</th>
+            </tr>`+fixTable;
+          $("#tableBox")[0].innerHTML=`
+            <tr class="row_total">
+            <th class="tableBold moveFixed" colspan="3">总计</th>
+            <th class="thColor1">${this.tableTotal.sumAnp}</th>
+            <th class="thColor2">${this.tableTotal.sumCase}</th>
+            <th class="thColor1">${this.tableTotal.sumAnpTarget}</th>
+            <th class="thColor2">${this.tableTotal.sumAnpRateStr}</th>
+            <th class="thColor1">${this.tableTotal.appletsDayNum}</th>
+            <th class="thColor2">${this.tableTotal.appletsTotalNum}</th>
+            <th class="thColor1">${this.tableTotal.dayAnp}</th>
+            <th class="thColor2">${this.tableTotal.dayCase}</th>
+            <th class="thColor1">${this.tableTotal.totalAnp}</th>
+            <th class="thColor2">${this.tableTotal.totalCase}</th>
+            <th class="thColor1">${this.tableTotal.totalOwnAnp}</th>
+            <th class="thColor2">${this.tableTotal.totalOwnCase}</th>
+           </tr>`+str;
+          this.watchScroll()
+          },
+          getData(){
+            instance.post("/getBusinessEltPre",{code:this.code,agentId:"1000033"}).then(res=>{
+            if(res.code==0){
+              this.makeTable(res.data)
+            }
+            })
+          },
+          watchScroll(){
+
+          }
+        },
+        created() {
+          try{
+            let hrefId=window.location.href.split("?")[1].split("=");
+          if(hrefId.indexOf("code")>=0){
+            this.code=hrefId[hrefId.indexOf("code")+1];
+          }
+          }catch(err){}       
+          this.getData()
+          this.makeTable(jsonList1)
+        },        mounted: function () {
+  this.$nextTick(function () {
+    $('#tbodyBox2').on('scroll', function(event) {
+    var scrollTop = $(this).prop('scrollTop');
+  $('#tbodyBox').prop('scrollTop', scrollTop);
+});
+    $('#tbodyBox').on('scroll', function(event) {
+    var scrollTop = $(this).prop('scrollTop');
+  $('#tbodyBox2').prop('scrollTop', scrollTop);
+});
+
+  })},
+        beforeMount() {
+        }
+      })
+
+    }
+
+  </script>
+  <script src="../lib/layui/layui.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+.header{
+    width: 100%;
+    height: 2.1rem;
+    position: relative;
+    text-align: center;
+    line-height: 2.1rem;
+}
+.header .icon{
+    position: absolute;
+    left: 0;
+    /* top: .8rem; */
+    width: 0.31rem;
+    height:  0.52rem;
+}
+.header .title{
+    font-size: .52rem;
+font-family: PingFang SC;
+font-weight: 500;
+color: #111111;
+}
+
+.times{
+    font-size: .43rem;
+}
+.ANP{
+    position: absolute;
+    right:1rem;
+}
+/*手机横屏时执行*/
+@media screen and (orientation:landscape){
+    .boxBanner{
+        display: flex;
+        justify-content: space-between;
+ }
+ .head_data {
+     font-size: .4rem;
+     text-align: right;
+ }
+ .times{
+     margin-right: 3rem;
+ }
+.head_title{
+    white-space: normal;
+    width:40%;
+}
+}
+/*手机竖屏时执行*/
+@media all and (orientation : portrait){ 
+
+  
+    
+    } 

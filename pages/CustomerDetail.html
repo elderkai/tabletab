@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta content="telephone=no" name="format-detection" />
+  <title>我的客户明细</title>
+ 
+  <script src="../assets/js/jquery-2.1.0.js"></script>
+  <link rel="stylesheet" href="../lib/layui/css/layui.css"/>
+  <link rel="stylesheet" href="../assets/css/page.css"/>
+  <link rel="stylesheet" href="../assets/css/1.css"/>
+  <link rel="stylesheet" href="../assets/css/3.css"/>
+</head>
+
+<body>
+  <div class="container" id="app">
+    <!-- <header class="header">
+      <i class="layui-icon layui-icon-left icon" style="font-size: 1rem; color: #000;"></i>
+      <div class="title">我的客户明细</div>
+      <hr class="hr" />
+    </header> -->
+    <div class="boxBanner">
+      <div class="head_title">我的客户明细</div>
+      <div class="head_data banner">
+        <span class="ANP">ANP单位：万</span>
+        <span class="times">数据刷新时间：{{data.statDateStr}}</span>
+      </div>
+    </div>
+    <div class="customerTitle">
+      <div class="customerNum">待跟进客户<span class="num1">{{data.preFollowEmployee?data.preFollowEmployee:0}}</span>个,核保中客户<span
+          class="num2">{{data.underwritingEmployee?data.underwritingEmployee:0}}</span>个</div>
+      <div class="browseNum">浏览客户<span class="num3">{{data.browseEmployee?data.browseEmployee:0}}</span>个,已完成客户<span
+          class="num4">{{data.finishEmployee?data.finishEmployee:0}}</span>个</div>
+    </div>
+    <!-- <div class="fixTableHead">
+      <table>
+        <thead>
+          <tr>
+            <th rowspan="2" class="blue">客户姓名</th>
+            </tr>
+        </thead>
+      </table>
+    </div> -->
+    <div class="boxFix">
+      <div class="fixTableHead CustomerDetail">
+        <table style="width: 4.1rem;">
+          <thead>
+            <tr class="trStyle1">
+                <th rowspan="2" class="blue moveFixed moveFixed1">客户姓名</th>
+                <th rowspan="2" class="blue moveFixed moveFixed1">微信昵称</th>
+                <th rowspan="2" class="blue moveFixed moveFixed1">客户状态</th>
+              </tr>
+          </thead>
+      </table>
+      <div class="tbodyBox" id="tbodyBox2">
+        <table border="0" cellpadding="0" cellspacing="0"
+          style="border-collapse:collapse;table-layout:fixed">
+          <tbody id="fixTableBox">
+            <tr @click="checkedPeople(index)" v-for="(item,index) in data.customerDetailList" :key="index"
+            :class="item.checked?'checkedStyle':''">
+            <th class="moveFixed2 moveFixed">{{item.employeeName}}</th>
+            <th class="moveFixed2 moveFixed">{{item.cickName}}</th>
+            <th class="moveFixed2 moveFixed">{{item.employeeStatus}}</th>
+            </tr>
+          </tbody>   
+        </table>
+      </div>
+      </div>
+      <div id="theadBox" class="theadBox">
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;table-layout:fixed">
+        <thead>
+          <tr>
+            <th rowspan="2" class="blue moveFixed moveFixed1">客户姓名</th>
+            <th rowspan="2" class="blue moveFixed moveFixed1">微信昵称</th>
+            <th rowspan="2" class="blue moveFixed moveFixed1">客户状态</th>
+            <th rowspan="2" class="color1">机构</th>
+            <th rowspan="2" class="color1">分行</th>
+            <th rowspan="2" class="color1 phoneWidth">客户手机号</th>
+            <th rowspan="2" class="color2 ">最后操作时间</th>
+            <th colspan="2" class="color9 ">未完成订单</th>
+            <th colspan="2" class="color10 ">草稿箱</th>
+            <th colspan="2" class="color11 ">已完成订单</th>
+          </tr>
+          <tr>
+            <th class="color9">ANP</th>
+            <th class="color9">件数</th>
+            <th class="color10">ANP</th>
+            <th class="color10">件数</th>
+            <th class="color11">ANP</th>
+            <th class="color11">件数</th>
+  
+          </tr>
+        </thead>
+      </table>
+      <div class="tbodyBox" id="tbodyBox">
+        <table border="0" cellpadding="0" cellspacing="0"
+          style="border-collapse:collapse;table-layout:fixed">
+          <tbody>
+            <tr @click="checkedPeople(index)" v-for="(item,index) in data.customerDetailList" :key="index"
+              :class="item.checked?'checkedStyle':''">
+              <th class="moveFixed2 moveFixed">{{item.employeeName}}</th>
+              <th class="moveFixed2 moveFixed">{{item.cickName}}</th>
+              <th class="moveFixed2 moveFixed">{{item.employeeStatus}}</th>
+              <th>{{item.agentOrgName}}</th>
+              <th>{{item.branchBank}}</th>
+              <th class="phoneWidth">{{item.mobile}}</th>
+              <th>{{item.appletsLastDateStr}}</th>
+              <th class="num5">{{item.unfinishedAnp}}</th>
+              <th class="num5">{{item.unfinishedCount}}</th>
+              <th class="num6">{{item.draftAnp}}</th>
+              <th class="num5">{{item.draftCount}}</th>
+              <th class="num6">{{item.finishedAnp}}</th>
+              <th class="num5">{{item.finishedCount}}</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+      </div>
+   
+    <div class="warnTitle"><span>说明：</span>本报表中凡涉及保险ANP统计结果为招行员工“招福通”下单的数据，由于部分员工在系统关闭前可能存在撤单，所以与最终交易结果可能存在差异。</div>
+
+    <div class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+      <legend></legend>
+      <hr class="hrPage"/>
+      <div class="checkedTableBox">
+        <div @click="checkedItem(1)" :class="show==1?'checkedItem checked1':'checkedItem'">未完成订单</div>
+        <div @click="checkedItem(2)" :class="show==2?'checkedItem checked2':'checkedItem'">草稿</div>
+        <div @click="checkedItem(3)" :class="show==3?'checkedItem checked3':'checkedItem'">已完成订单</div>
+        <div @click="checkedItem(4)" :class="show==4?'checkedItem checked4':'checkedItem'">浏览记录</div>
+        <div @click="checkedItem(5)" :class="show==5?'checkedItem checked5':'checkedItem'">行为追踪</div>
+      </div>
+      <div v-show="show==1" class="table1">
+        <div class="boxFix">
+          <div class="fixTableHead noOrder">
+            <table style="width: 4.1rem;">
+              <thead>
+                <tr class="">
+                    <th rowspan="1" class="color9 moveFixed moveFixed1">产品名称</th>
+                    <th rowspan="1" class="color9 moveFixed moveFixed1">订单编号</th>
+                    <th rowspan="1" class="color9 moveFixed moveFixed1">订单状态</th>
+                  </tr>
+              </thead>
+          </table>
+          <div class="tbodyBox" id="tbodyBox3">
+            <table border="0" cellpadding="0" cellspacing="0"
+              style="border-collapse:collapse;table-layout:fixed">
+              <tbody id="fixTableBox">
+                <tr style="height: .75rem;overflow: hidden;box-sizing: border-box;" v-for="(item,index) in listOrder" :key="index">
+                  <th class=" ">{{item.productName}}</th>
+                  <th class="morWidth  ">{{item.orderId}}</th>
+                  <th class=" ">{{item.orderStatusName}}</th>
+                </tr>
+              </tbody>   
+            </table>
+          </div>
+          </div>
+          <div id="tableBox2"  class="theadBox">
+            <table border="0" cellpadding="0" cellspacing="0"
+              style="border-collapse:collapse;table-layout:fixed">
+              <thead>
+                <tr>
+                  <th colspan="2" class="color9 moveFix moveFix1">产品名称 </th>
+                  <th colspan="2" class="color9 morWidth moveFix moveFix1">订单编号</th>
+                  <th colspan="2" class="color9 moveFix moveFix1">订单状态</th>
+                  <th colspan="2" class="color9 ">被保险人</th>
+                  <th colspan="2" class="color9 litWidth">关系</th>
+                  <th colspan="2" class="color9 ">保额</th>
+                  <th colspan="2" class="color9 ">当前保费</th>
+                  <th colspan="2" class="color9 ">ANP</th>
+                  <th colspan="2" class="color9 litWidth">是否上传体检资料</th>
+                  <th colspan="2" class="color9 litWidth">是否上传手持证件号</th>
+                  <th colspan="2" class="color9 litWidth">是否人脸识别</th>
+                  <th colspan="2" class="color9 litWidth">是否需上传证件资料（非身份证）</th>
+                  <th colspan="2" class="color9 litWidth">是否进行正面OCR</th>
+                  <th colspan="2" class="color9 litWidth">是否进行反面OCR</th>
+                  <th colspan="2" class="color9 litWidth">是否上传病例</th>
+                  <th colspan="2" class="color9 litWidth">是否下发线上照会</th>
+                  <th colspan="2" class="color9 ">线上照会类型</th>
+                </tr>
+              </thead>
+            </table>
+            <div class="tbodyBox" id="tbodyBox4">
+              <table border="0" cellpadding="0" cellspacing="0"
+                style="border-collapse:collapse;table-layout:fixed">
+                <tbody>
+                  <tr v-for="(item,index) in listOrder" :key="index">
+                    <th class="moveFix moveFix2">{{item.productName}}</th>
+                    <th class="morWidth moveFix moveFix2">{{item.orderId}}</th>
+                    <th class="moveFix moveFix2">{{item.orderStatusName}}</th>
+                    <th>{{item.insuredName}}</th>
+                    <th class="litWidth">{{item.relationToApplicant}}</th>
+                    <th>{{item.insuredAmount}}</th>
+                    <th>{{item.currentPremium}}</th>
+                    <th>{{item.anp}}</th>
+                    <th class="litWidth">
+                        <img v-show="item.isUploadHealth=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                        <img v-show="item.isUploadHealth=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+                    </th>
+                  
+                    <th class="litWidth">
+                        <img v-show="item.isUploadCertificate=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                        <img v-show="item.isUploadCertificate=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+                    </th>
+                  
+                    <th class="litWidth">
+                        <img v-show="item.isFaceCheck=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                        <img v-show="item.isFaceCheck=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+                    </th>
+                  
+                    <th class="litWidth">
+                        <img v-show="item.isNeedCertificate=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                        <img v-show="item.isNeedCertificate=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+                    </th>
+                  
+                    <th class="litWidth">
+                        <img v-show="item.isOcr=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                        <img v-show="item.isOcr=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+                    </th>
+                  
+                    <th class="litWidth">
+                        <img v-show="item.isBackOcr=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                        <img v-show="item.isBackOcr=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+                    </th>
+                  
+                    <th class="litWidth">
+                        <img v-show="item.isMedical=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                        <img v-show="item.isMedical=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+                    </th>
+                  
+                    <th class="litWidth">
+                        <img v-show="item.isNote=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                        <img v-show="item.isNote=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+                    </th>
+                    <th class=""></th>
+                  </tr>
+    
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-show="show==2" class="table1">
+        <table border="0" cellpadding="0" cellspacing="0"
+          style="width:17.1rem;border-collapse:collapse;table-layout:fixed">
+          <thead>
+            <tr>
+              <th colspan="2" class="color10 ">产品名称</th>
+              <th colspan="2" class="color10 ">订单编号</th>
+              <th colspan="2" class="color10 ">订单状态</th>
+              <th colspan="2" class="color10 ">被保险人</th>
+              <th colspan="2" class="color10 ">关系</th>
+              <th colspan="2" class="color10 ">保额</th>
+              <th colspan="2" class="color10 ">当前保费</th>
+              <th colspan="2" class="color10 ">ANP</th>
+            </tr>
+          </thead>
+        </table>
+        <div class="tbodyBox">
+          <table border="0" cellpadding="0" cellspacing="0"
+            style="width:17.1rem;border-collapse:collapse;table-layout:fixed">
+            <tbody>
+              <tr v-for="(item,index) in listOrder" :key="index">
+                <th>{{item.productName}}</th>
+                <th class="morWidth">{{item.orderId}}</th>
+                <th>{{item.orderStatusName}}</th>
+                <th>{{item.insuredName}}</th>
+                <th class="litWidth">{{item.relationToApplicant}}</th>
+                <th>{{item.insuredAmount}}</th>
+                <th>{{item.currentPremium}}</th>
+                <th>{{item.anp}}</th>
+
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+      <div v-show="show==3" class="table1">
+        <table border="0" cellpadding="0" cellspacing="0"
+          style="width:17.1rem;border-collapse:collapse;table-layout:fixed">
+          <thead>
+            <tr>
+              <th colspan="2" class="color11 ">产品名称</th>
+              <th colspan="2" class="color11 morWidth">订单编号</th>
+              <th colspan="2" class="color11 ">订单状态</th>
+              <th colspan="2" class="color11 ">被保险人</th>
+              <th colspan="2" class="color11 litWidth">关系</th>
+              <th colspan="2" class="color11 ">保额</th>
+              <th colspan="2" class="color11 ">当前保费</th>
+              <th colspan="2" class="color11 ">ANP</th>
+            
+            </tr>
+          </thead>
+        </table>
+        <div class="tbodyBox">
+          <table border="0" cellpadding="0" cellspacing="0"
+            style="width:17.1rem;border-collapse:collapse;table-layout:fixed">
+            <tbody>
+              <tr v-for="(item,index) in listOrder" :key="index">
+                <th>{{item.productName}}</th>
+                <th class="morWidth">{{item.orderId}}</th>
+                <th>{{item.orderStatusName}}</th>
+                <th>{{item.insuredName}}</th>
+                <th class="litWidth">{{item.relationToApplicant}}</th>
+                <th>{{item.insuredAmount}}</th>
+                <th>{{item.currentPremium}}</th>
+                <th>{{item.anp}}</th>
+               
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div v-show="show==4" class="table1">
+        <table border="0" cellpadding="0" cellspacing="0"
+          style="width:17.1rem;border-collapse:collapse;table-layout:fixed">
+          <thead>
+            <tr>
+              <th colspan="2" class="color1 ">产品名称</th>
+              <th colspan="2" class="color1 ">是否浏览产品</th>
+              <th colspan="2" class="color1 ">是否进行保费测算</th>
+              <th colspan="2" class="color1 ">浏览次数</th>
+              <th colspan="2" class="color1 ">最后浏览时间</th>
+            </tr>
+          </thead>
+        </table>
+        <div class="tbodyBox">
+          <table border="0" cellpadding="0" cellspacing="0"
+            style="width:17.1rem;border-collapse:collapse;table-layout:fixed">
+            <tbody>
+              <tr v-for="(item,index) in listBrowses" :key="index">
+                <th>{{item.productName}}</th>
+                <th>
+                  <img v-show="item.isBrowse=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                  <img v-show="item.isBrowse=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+                </th>
+                <th>
+                  <img v-show="item.isCalculation=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                  <img v-show="item.isCalculation=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+                </th>
+                <th>{{item.browseNum}}</th>
+                <th>{{item.lastBrowseTimeStr}}</th>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div v-show="show==5" class="table1">
+        <table border="0" cellpadding="0" cellspacing="0"
+          style="width:17.1rem;border-collapse:collapse;table-layout:fixed">
+          <thead>
+
+            <tr>
+              <th colspan="2" class="color12 ">是否预投保客户</th>
+              <th colspan="2" class="color12 ">是否加企业微信</th>
+              <th colspan="2" class="color12 ">是否进入小程序</th>
+              <th colspan="2" class="color12 ">是否浏览产品</th>
+              <th colspan="2" class="color12 ">是否进行保单检视</th>
+              <th colspan="2" class="color12 ">是否进行健康评测</th>
+              <th colspan="2" class="color12 ">是否观看视频</th>
+              <th colspan="2" class="color12 ">是否参与健康讲座</th>
+              <th colspan="2" class="color12 ">是否接受建议书</th>
+              <th colspan="2" class="color12 ">客户意向状态</th>
+            </tr>
+          </thead>
+        </table>
+        <div class="tbodyBox">
+          <table border="0" cellpadding="0" cellspacing="0"
+            style="width:17.1rem;border-collapse:collapse;table-layout:fixed">
+            <tbody>
+              <tr> 
+              <!-- <th>
+                <img v-show="BehaviorTrack.isIntroduceApplets=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                <img v-show="BehaviorTrack.isIntroduceApplets=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+              </th> -->
+              <th>
+                <img v-show="BehaviorTrack.isIntroduceApplets=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                <img v-show="BehaviorTrack.isIntroduceApplets=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+              </th>
+              <th>
+               
+                <img v-show="BehaviorTrack.isJoinApplets=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                <img v-show="BehaviorTrack.isJoinApplets=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+              </th>
+              <th>
+                <img v-show="BehaviorTrack.isGoApplets=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                <img v-show="BehaviorTrack.isGoApplets=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+              </th>
+              <th>
+                <img v-show="BehaviorTrack.isBrowse=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                <img v-show="BehaviorTrack.isBrowse=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+              </th>
+              <th>
+                <img v-show="BehaviorTrack.isReview=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                <img v-show="BehaviorTrack.isReview=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+              </th>
+              <th>
+                <img v-show="BehaviorTrack.isHealthAss=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                <img v-show="BehaviorTrack.isHealthAss=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+              </th>
+              <th>
+                <img v-show="BehaviorTrack.isWatch=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                <img v-show="BehaviorTrack.isWatch=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+              </th>
+              <th>
+                <img v-show="BehaviorTrack.isHealthLecture=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                <img v-show="BehaviorTrack.isHealthLecture=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+              </th>
+              <th>
+                <img v-show="BehaviorTrack.isAccept=='Y'" class="treatIcon" src="../assets/imgs/勾.png" alt=""> 
+                <img v-show="BehaviorTrack.isAccept=='N'" class="wrongIcon" src="../assets/imgs/叉.png" alt="">
+              </th>
+            
+           
+            <th>{{BehaviorTrack.intentionType}}</th>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+  </div>
+  <script src="../lib/layui/layui.js"></script>
+  <script src="../assets/js/vue.js"></script>
+  <script src="../assets/js/setRem.js"></script>
+  <script src="../assets/js/axios.js"></script>
+  <script src="../assets/js/request.js"></script>
+  <script src="../assets/js/jquery-2.1.0.js"></script>
+  <script>
+    window.onload = function () {
+      new Vue({
+        el: '#app',
+        data() {
+          return {
+            listOrder: [],
+            data: { customerDetailList: [], preFollowEmployee: '' },
+            listBrowses:[],
+            BehaviorTrack:{},
+            agentNum: '',
+            unionId: "",
+            show: 1,
+            requestType:1
+          }
+        },
+        methods: {
+
+          checkedItem(value) {
+            this.show = value;
+            this.requestData()
+          },
+          requestData(){
+            this.show==1?this.getlistOrder("未完成"):"";
+            this.show==2?this.getlistOrder("草稿"):"";
+            this.show==3?this.getlistOrder("已完成"):"";
+            this.show==4?this.getListBrowse():"";
+            this.show==5?this.getBehavior():"";
+          },
+          getData() {
+            let appid = 7
+            instance.post(`/listCustomerDetail`, { agentNum: this.agentNum }).then(res => {
+              if (res.code == 0) {
+                this.data.anp = res.data.anp//总Anp
+                this.data.browseEmployee = res.data.browseEmployee//浏览客户
+                let arr = [];
+                res.data.customerDetailList.forEach((item, index) => {
+                  let obj = { checked: false }
+                  for (let i in item) {
+                    obj[i] = item[i];
+                    // obj['hidTables'] = { hidMobile: item.mobile, hidName: item.employeeName }
+                  }
+                    arr.push(obj);
+
+                })
+                arr[0].checked = true
+                this.data.finishEmployee = res.data.finishEmployee;//已完成客户
+                this.data.preFollowEmployee = res.data.preFollowEmployee;//待跟进客户
+                this.data.statDateStr = res.data.statDateStr;//数据刷新时间
+                this.data.customerDetailList = arr//客户明细列表
+                this.data.underwritingEmployee = res.data.underwritingEmployee;//核保客户
+                this.unionId = arr[0].unionId;
+                this.getlistOrder("未完成");
+              }
+            })
+          },
+          getlistOrder(value) {
+            instance.post("/listOrderDetail", { agentNum: this.agentNum, orderStatusName: value, unionId: this.unionId }).then(res => {
+              if (res.code == 0&&res.data) {
+                let arr = [];
+                res.data.forEach((item, index) => {
+                  let obj = {};
+                  obj = {
+                    productName: item.productName,//产品名称
+                    orderId: item.orderId,//订单编号
+                    orderStatusName: item.orderStatusName,//订单状态
+                    insuredName: item.insuredName,//被保险人
+                    relationToApplicant: item.relationToApplicant,//关系
+                    insuredAmount: item.insuredAmount,//保额
+                    currentPremium: item.currentPremium,//当期保费
+                    anp: item.anp,
+                    isUPloadHealth: item.isUPloadHealth,//是否上传体检资料
+                    isUploadCertificate: item.isUploadCertificate,//是否上传手持证件照
+                    isFaceCheck: item.isFaceCheck,//是否人脸识别
+                    isNeedCertificate: item.isNeedCertificate,//是否需上传证件资料（非身份证）
+                    isOcr: item.isOcr,//是否进行正面OCR
+                    isBackOcr: item.isBackOcr,//是否进行反面面OCR
+                    isMedical: item.isMedical,//是否上传病历
+                    isNote: item.isNote,//是否下发线上照会
+                    noteType: item.noteType//线上照会类型
+                  }
+                  arr.push(obj)
+                })
+                this.listOrder=arr;
+              }
+            })
+
+
+          },
+          getListBrowse() {
+            instance.post('/listBrowseHistory', { agentNum: this.agentNum, unionId: this.unionId }).then(res => {
+              if(res.code==0){
+                let arr=[];
+                res.data.forEach((item,index)=>{
+                  let obj={};
+                  for(var i in item){obj[i]=item[i]}
+                  arr.push(obj)
+                })
+              this.listBrowses=arr;
+              }
+            })
+          },
+          getBehavior() {
+            instance.post("/getBehaviorTrack", { agentNum: this.agentNum, unionId: this.unionId }).then(res => {
+              if(res.code==0){
+                for(var i in res.data){
+                  this.BehaviorTrack[i]=res.data[i]
+                }
+                this.$set(this.BehaviorTrack,this.BehaviorTrack)
+              }
+            })
+          },
+          checkedPeople(value) {
+            this.data.customerDetailList.forEach((item, index) => {
+              
+              item.checked = false; if (index == value) {this.unionId=item.unionId; item.checked = true } })
+              this.requestData()
+          }
+        },
+        created() {
+          try{
+            let hrefId=window.location.href.split("?")[1].split("=");
+            if(hrefId.indexOf("userid")>=0){
+            this.agentNum=hrefId[hrefId.indexOf("userid")+1];
+          }
+          }catch(err){}
+
+        
+          this.getData();
+
+        },
+        mounted: function () {
+  this.$nextTick(function () {
+    $('#tbodyBox2').on('scroll', function(event) {
+    var scrollTop = $(this).prop('scrollTop');
+  $('#tbodyBox.is-fixed').prop('scrollTop', scrollTop);
+});
+    $('#tbodyBox3').on('scroll', function(event) {
+    var scrollTop = $(this).prop('scrollTop');
+  $('#tbodyBox4.is-fixed').prop('scrollTop', scrollTop);
+});
+
+  })},
+        beforeCreate() {
+        
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>
